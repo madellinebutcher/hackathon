@@ -5,8 +5,6 @@ var schemaName = 'Post'
 
 
 var schema = new Schema({
-  message: {type: String},
-  post: {
     title: {type: String, required: true},//required
     body: {type: String, required: true},//required
     img: {type: String},
@@ -18,7 +16,6 @@ var schema = new Schema({
       ref: 'User',
       required: true
     }
-  }
 })
 
 module.exports = mongoose.model(schemaName, schema)

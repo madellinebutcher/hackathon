@@ -5,8 +5,6 @@ var schemaName = 'Comment'
 
 
 var schema = new Schema({
-  message: {type: String},
-  comment: {
     title: {type: String, required: true},//required
     body: {type: String, required: true},//required
     img: {type: String},
@@ -23,7 +21,6 @@ var schema = new Schema({
       ref: 'Post',
       required: true
     }
-  }
 })
 
 module.exports = mongoose.model(schemaName, schema)

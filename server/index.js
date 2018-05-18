@@ -16,7 +16,8 @@ app.use(bp.urlencoded({extended: true}))
 var users = require('./server-assets/routes/users')
 var posts = require('./server-assets/routes/posts')
 var comments = require('./server-assets/routes/comments')
-var subComments = require('./server-assets/routes/subComments')
+var subComments = require('./server-assets/routes/sub-comments')
+var dragons = require('./server-assets/routes/dragons')
 
 app.use(bp.json())
 app.use(bp.urlencoded({extended: true}))
@@ -25,6 +26,7 @@ app.use(users.router)
 app.use(posts.router)
 app.use(comments.router)
 app.use(subComments.router)
+app.use(dragons.router)
 
 
 
