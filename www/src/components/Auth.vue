@@ -14,8 +14,9 @@
       <h1>Register</h1>
       <label for="name">Username</label>
       <input type="text" name="name" id="name" v-model="user.name">
-      <label for="image">{{api.classes}}</label>
-      
+      <!-- <label for="image">{{api.classes}}</label> -->
+      <!-- <label for="class"></label> -->
+      <!-- <label for="race"></label> -->
       <button @click="register">Register</button>
       <p>Already a user?
         <em @click="toggle">Login</em>
@@ -30,7 +31,10 @@
   export default {
     name: 'Auth',
     data() {
-      return {}
+      return {
+        user: {},
+        showLogin: true
+      }
     },
     computed: {},
     methods: {
