@@ -13,7 +13,18 @@ require('./server-assets/db/mlab-config')
 app.use(bp.json())
 app.use(bp.urlencoded({extended: true}))
 
+var users = require('./server-assets/routes/users')
+var posts = require('./server-assets/routes/posts')
+var comments = require('./server-assets/routes/comments')
+var subComments = require('./server-assets/routes/subComments')
 
+app.use(bp.json())
+app.use(bp.urlencoded({extended: true}))
+
+app.use(users.router)
+app.use(posts.router)
+app.use(comments.router)
+app.use(subComments.router)
 
 
 
