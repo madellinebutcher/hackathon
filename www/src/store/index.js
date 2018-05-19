@@ -15,7 +15,8 @@ export default new vuex.Store({
         user: {},
         posts: [],
         comments: [],
-        activePost: {}
+        activePost: {},
+        activeComment: {}
     },
 
     mutations:{

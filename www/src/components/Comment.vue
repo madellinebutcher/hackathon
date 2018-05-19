@@ -5,7 +5,7 @@
             <h3>Body: {{activePost.body}} </h3>
             <img :src="activePost.img" alt="" srcset="">
         </div>
-        <button @click="toggle">Add post</button>
+        <button @click="toggle">Add comment</button>
         <div v-if="showAddComment">
             <form v-on:submit.prevent="addComment">
                 <div class="form-group">
@@ -21,7 +21,6 @@
             <h4>title: {{comment.title}}</h4>
             <img :src="comment.img" alt="">
             <p>{{comment.body}}</p>
-
         </div>
 
 
@@ -34,7 +33,7 @@
         name: 'comment',
         data() {
             return {
-                post: {
+                comment: {
                     title: '',
                     body: '',
                     img: '',
@@ -42,23 +41,37 @@
                     userDownVotes: [],
                     author: '',
                     userId: '',//may be incorect
-                    postId
+                    postId: ''
                 },
                 showAddComment: false,
             }
-        }
-    },
-
-    computed: {
-        comments(){
-            return this.$store.state.comments
         },
-        activePost() {
-            return this.$store.state.activePost
+        computed: {
+            comments() {
+                return this.$store.state.comments
+            },
+            activePost() {
+                return this.$store.state.activePost
+            },
+            user() {
+                return this.$store.state.user
+            }
+        },
+        methods: {
+            toggle() {
+                this.showAddComment = !this.showAddComment
+            }, 
+            addComment() {
+                this.comment.postId = this.activePost._id
+                if (this.user._id) {
+                    this.comment.author = this.user.name
+                    this.comment.userId = this.user._id
+                }
+                debugger
+                this.$store.dispatch('addComment', this.comment)
+            }
         }
-    },
-    methods: { }
-}
+    }
 </script>
 
 
