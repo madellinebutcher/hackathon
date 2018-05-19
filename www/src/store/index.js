@@ -14,7 +14,8 @@ export default new vuex.Store({
     state: {
         user: {},
         posts: [],
-        comments: []
+        comments: [],
+        activePost: {}
     },
 
     mutations:{
@@ -65,11 +66,21 @@ export default new vuex.Store({
                 })
             },
         getComments({dispatch, commit}, post){
-            auth.get('/comments')
+            auth.get('/comments?postId='+post._id)
             .then(res=>{
                 commit('setComments', res.data.data)
             })
+        },
+        addComment({dispatch,commit}, comment){
+            auth.post('/comments', comment)
+            .then(res =>{
+                dispatch()
+            })
         }
+        // getSubComments()
+
+
+        // addSubComments()
     }
 })
 

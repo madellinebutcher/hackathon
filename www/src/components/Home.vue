@@ -19,7 +19,7 @@
 
         <div>
             <div class="post" v-for="post in posts">
-                <h4>{{post.title}}</h4>
+                <a :@click="selectPost(post)"><h4>{{post.title}}</h4></a>
                 <img :src="post.img" alt="">
                 <p>{{post.body}}</p>
             </div>
@@ -48,6 +48,7 @@
                     // userId: this.$store.user._id,//may be incorect
                 },
                 showAddPost: false
+
             }
         },
 
@@ -65,6 +66,11 @@
             },
             toggle() {
                 this.showAddPost = !this.showAddPost
+            },
+            selectPost(post) {
+                this.$store.state.activePost = post
+                this.$store.dispatch('getComments', post)
+                router.push('/comment')
             }
         },
         components: {}
