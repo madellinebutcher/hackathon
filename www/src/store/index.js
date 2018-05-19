@@ -15,6 +15,7 @@ export default new vuex.Store({
         user: {},
         posts: [],
         comments: [],
+        subComments: [],
         activePost: {},
         activeComment: {}
     },
@@ -28,6 +29,9 @@ export default new vuex.Store({
         },
         setComments(state, comments){
             state.comments = comments
+        },
+        setSubComments(state, subComments){
+            state.subComments = subComments
         }
     },
 
@@ -75,11 +79,21 @@ export default new vuex.Store({
             .then(res =>{
                 dispatch('getComments', this.activePost)
             })
+        },
+        getSubComments({dispatch, commit}, comment){
+            auth.get('/sub-comments?commentId='+comment._id)
+            .then(res=>{
+                console.log(res)
+                commit('setSubComments', res.data)
+            })
+        },
+        addSubComment({dispatch,commit,state}, subComment){
+            debugger
+            auth.post('/sub-comments', subComment)
+            .then(res =>{
+                dispatch('getSubComments', state.activeComment)
+            })
         }
-        // getSubComments()
-
-
-        // addSubComments()
     }
 })
 
