@@ -19,14 +19,14 @@ export default new vuex.Store({
     },
 
     mutations:{
-        setUser(state, users){
-            state.user = users
-        },
-        addUser(state, users){
-            state.user = users
+        setUser(state, user){
+            state.user = user
         },
         setPost(state, post){
             state.posts = post
+        },
+        setComments(state, comments){
+            state.comments = comments
         }
     },
 
@@ -34,8 +34,7 @@ export default new vuex.Store({
         getUsers({dispatch, commit}, user){
             auth.post('/login', user)
             .then(res => {
-                commit('setUser', res.data.user)
-                router.push('/home')
+                commit('setUser', res.data)
             })
             .catch(err => {
                 console.error(err)
@@ -43,11 +42,8 @@ export default new vuex.Store({
         },
 
         addUsers({dispatch, commit}, user){   
-            debugger
-            auth.post('/create', user)// check register in Auth.vue
-            .then(res => {
-                commit('addUser', res.data.user)
-                router.push('/home')
+            auth.post('/create', user).then(res => {
+                commit('setUser', res.data)
             })
             .catch(err => {
                 console.error(err)
@@ -57,19 +53,20 @@ export default new vuex.Store({
         getPosts({dispatch, commit}, post){
             auth.get('/posts')
             .then(res => {
-                commit('setPost', res.data.data)
+                commit('setPost', res.data)
             })
         },
         addPost({dispatch, commit}, post){
             auth.post('/posts', post)
             .then(res => {
-                    dispatch('setPost', post)
+                    commit('setPost', post)
                 })
             },
         getComments({dispatch, commit}, post){
             auth.get('/comments?postId='+post._id)
             .then(res=>{
-                commit('setComments', res.data.data)
+                console.log(res)
+                commit('setComments', res.data)
             })
         },
         addComment({dispatch,commit}, comment){

@@ -10,6 +10,7 @@ var schema = new Schema({
     img: {type: String},
     userUpVotes: [{type: String}],
     userDownVotes: [{type: String}],
+    author: {type: String, required: true},
     //relationship
     userId: {
       type: ObjectId,
