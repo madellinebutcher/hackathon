@@ -3,21 +3,20 @@
 
     <div class="login" v-if="showLogin">
       <h1>Login</h1>
-      <label for="name">Username</label>
-      <input type="text" name="name" id="name" v-model="user.name">
-      <button @click="login">Login</button>
+      <form v-on:submit.prevent="login">
+        <input type="text" name="name" id="name" v-model="user.name">
+        <button type="submit">Login</button>
+      </form>
       <p>Not a user?
         <em @click="toggle">Register</em>
       </p>
     </div>
     <div class="register" v-if="!showLogin">
       <h1>Register</h1>
-      <label for="name">Username</label>
-      <input type="text" name="name" id="name" v-model="user.name">
-      <!-- <label for="image">{{api.classes}}</label> -->
-      <!-- <label for="class"></label> -->
-      <!-- <label for="race"></label> -->
-      <button @click="register">Register</button>
+      <form v-on:submit.prevent="register">
+        <input type="text" name="name" id="name" v-model="user.name">
+        <button type="submit">Register</button>
+      </form>
       <p>Already a user?
         <em @click="toggle">Login</em>
       </p>
@@ -32,7 +31,9 @@
     name: 'Auth',
     data() {
       return {
-        user: {},
+        user: {
+          name: ''
+        },
         showLogin: true
       }
     },
@@ -42,10 +43,12 @@
         this.showLogin = !this.showLogin
       },
       register() {
-        this.$store.dispatch('register', this.user)
+        this.$store.dispatch('addUsers', this.user)
+        router.push('home')
       },
       login() {
-        this.$store.dispatch('login', this.user)
+        router.push('home')
+        this.$store.dispatch('getUsers', this.user)
       }
     },
     components: {}

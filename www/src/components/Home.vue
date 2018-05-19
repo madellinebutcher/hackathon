@@ -45,7 +45,7 @@
                     img: '',
                     userUpVotes: [],
                     userDownVotes: [],
-                    // userId: this.$store.user._id,//may be incorect
+                    userId: user._id,//may be incorect
                 },
                 showAddPost: false
 

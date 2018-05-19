@@ -4,7 +4,7 @@ import axios from 'axios'
 import router from '../router'
 
 let auth = axios.create({
-    baseURL: 'https://localhost:3000/api',
+    baseURL: 'http://localhost:3000/api',
     timeout: 3000
 })
 
@@ -26,13 +26,13 @@ export default new vuex.Store({
             state.user = users
         },
         setPost(state, post){
-            state.posts.push(post)
+            state.posts = post
         }
     },
 
     actions:{
         getUsers({dispatch, commit}, user){
-            auth.get('/login', user)
+            auth.post('/login', user)
             .then(res => {
                 commit('setUser', res.data.user)
                 router.push('/home')
@@ -43,6 +43,7 @@ export default new vuex.Store({
         },
 
         addUsers({dispatch, commit}, user){   
+            debugger
             auth.post('/create', user)// check register in Auth.vue
             .then(res => {
                 commit('addUser', res.data.user)
@@ -56,7 +57,7 @@ export default new vuex.Store({
         getPosts({dispatch, commit}, post){
             auth.get('/posts')
             .then(res => {
-                commit('setPosts', res.data.data)
+                commit('setPost', res.data.data)
             })
         },
         addPost({dispatch, commit}, post){
@@ -74,7 +75,7 @@ export default new vuex.Store({
         addComment({dispatch,commit}, comment){
             auth.post('/comments', comment)
             .then(res =>{
-                dispatch()
+                dispatch('getComments', this.activePost)
             })
         }
         // getSubComments()
