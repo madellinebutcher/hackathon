@@ -73,7 +73,6 @@ export default new vuex.Store({
         getComments({ dispatch, commit }, post) {
             auth.get('/comments?postId=' + post._id)
                 .then(res => {
-                    debugger
                     var sort = res.data.sort((a, b) => {
                         return b.userUpVotes.length - a.userUpVotes.length
                     })
