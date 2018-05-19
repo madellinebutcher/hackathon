@@ -4,24 +4,28 @@
         <div class="user" v-if="user._id">
             <h3>user: {{user.name}}</h3>
         </div>
-        <button @click="toggle">Add post</button>
+        <button class="butt" @click="toggle">Add post</button>
         <div v-if="showAddPost">
             <form v-on:submit.prevent="addPost">
                 <div class="form-group">
-                    <input type="text" name="title" placeholder="Title" v-model="post.title">
-                    <input type="text" name="body" placeholder="Your post here...." v-model="post.body">
-                    <input type="url" name="img" placeholder="Image" v-model="post.img">
+                    <input class="register" type="text" name="title" placeholder=" Title" v-model="post.title">
+                    <input class="register" type="text" name="body" placeholder=" Your post here...." v-model="post.body">
+                    <input class="register" type="url" name="img" placeholder=" Image" v-model="post.img">
                 </div>
-                <button type="submit">Post</button>
+                <button class="butt" type="submit">Post</button>
             </form>
         </div>
 
         <div>
             <div class="post" v-for="post in posts">
+                    <div class="card container-fluid">
+                            <div class="card-body">
                 <a @click="selectPost(post)"><h4>{{post.title}}</h4></a>
                 <img :src="post.img" alt="">
                 <p>{{post.body}}</p>
                 <p>{{post.author}}</p>
+            </div>
+            </div>
             </div>
         </div>
 
@@ -83,4 +87,25 @@
 
 
 <style scoped>
+
+
+.card{
+background-image: url('../../D20.png');
+    width: 50%;
+margin-bottom: 1rem;
+margin-top: 1rem;
+width: 30rem
+}
+.butt{
+    background: rgb(78, 78, 78);
+    border-radius: 2rem;
+    margin-top:1rem ;
+    margin-bottom: 1rem
+}
+.register{
+  background:rgb(61, 24, 24);
+  border-radius: 1rem;
+  margin-left:1rem
+}
+
 </style>

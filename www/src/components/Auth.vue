@@ -1,21 +1,21 @@
 <template>
   <div class="Auth">
 
-    <div class="login" v-if="showLogin">
+    <div class="row login text-white d-flex align-items-center" v-if="showLogin">
       <h1>Login</h1>
-      <form v-on:submit.prevent="login">
-        <input type="text" name="name" id="name" v-model="user.name">
-        <button type="submit">Login</button>
+      <form v-on:submit.prevent="login" class="form">
+        <input class="input text-white" type="text" name="name" placeholder=" username" id="name" v-model="user.name">
+        <button class="butt" type="submit">Login</button>
       </form>
-      <p>Not a user?
+      <p class="user">Not a user ?
         <em @click="toggle">Register</em>
       </p>
     </div>
-    <div class="register" v-if="!showLogin">
+    <div class="register text-white" v-if="!showLogin">
       <h1>Register</h1>
       <form v-on:submit.prevent="register">
-        <input type="text" name="name" id="name" v-model="user.name">
-        <button type="submit">Register</button>
+        <input class="register text-white" type="text" name="name" id="name" v-model="user.name">
+        <button class="butt" type="submit">Register</button>
       </form>
       <p>Already a user?
         <em @click="toggle">Login</em>
@@ -54,7 +54,38 @@
     components: {}
   }
 </script>
-
-
 <style scoped>
+.login{
+  background-image: url('../../D&D.jpg');
+  height: 22rem;
+  margin-top: 10rem;
+  margin-left: 7rem;
+  font-size: 2rem
+}
+.bgColor{
+  background-color: #550b11;
+}
+.user{
+  margin-left:2rem
+}
+.form{
+ margin-left:1rem
+
+}
+.input{
+  border-radius: 1rem;
+  background-color:#470308;
+}
+.butt{
+  height:4rem;
+  border-radius: 2rem;
+  background: #969696;
+}
+.register{
+  background:rgb(61, 24, 24);
+  border-radius: 1rem;
+  margin-left:1rem
+}
+
+
 </style>
