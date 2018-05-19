@@ -18,10 +18,16 @@
 
         <div>
             <div class="post" v-for="post in posts">
-                <a @click="selectPost(post)"><h4>{{post.title}}</h4></a>
+                <a @click="selectPost(post)">
+                    <h4>{{post.title}}</h4>
+                </a>
                 <img :src="post.img" alt="">
                 <p>{{post.body}}</p>
                 <p>{{post.author}}</p>
+                <p>upvotes: {{post.userUpVotes.length}}</p>
+                <p>downvotes: {{post.userDownVotes.length}}</p>
+                <button v-if="voteCheck(post)"@click="addUpVote(post)">up vote</button>
+                <button v-if="voteCheck(post)"@click="addDownVote(post)">down vote</button>
             </div>
         </div>
 
@@ -63,7 +69,7 @@
         },
         methods: {
             addPost() {
-                if(this.user._id){
+                if (this.user._id) {
                     this.post.author = this.user.name
                     this.post.userId = this.user._id
                 }
@@ -76,6 +82,17 @@
                 this.$store.state.activePost = post
                 this.$store.dispatch('getComments', post)
                 this.$router.push('comment')
+            },
+            addUpVote(post) {
+                post.userUpVotes.push(this.user._id)
+                this.$store.dispatch('upPost', post)
+            },
+            voteCheck(post) {
+                return !(post.userUpVotes.includes(this.user._id))
+            },
+            addDownVote(post) {
+                post.userDownVotes.push(this.user._id)
+                this.$store.dispatch('upPost', post)
             }
         }
     }

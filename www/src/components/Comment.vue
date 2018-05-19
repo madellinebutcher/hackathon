@@ -17,10 +17,16 @@
             </form>
         </div>
         <div class="comments" v-for="comment in comments">
-            <a @click="selectComment(comment)"><h3>User: {{comment.author}}</h3></a>
+            <a @click="selectComment(comment)">
+                <h3>User: {{comment.author}}</h3>
+            </a>
             <h4>title: {{comment.title}}</h4>
             <img :src="comment.img" alt="">
             <p>{{comment.body}}</p>
+            <p>upvotes: {{comment.userUpVotes.length}}</p>
+            <p>downvotes: {{comment.userDownVotes.length}}</p>
+            <button v-if="voteCheck(comment)" @click="addUpVote(comment)">up vote</button>
+            <button v-if="voteCheck(comment)" @click="addDownVote(comment)">down vote</button>
         </div>
 
 
@@ -60,7 +66,7 @@
         methods: {
             toggle() {
                 this.showAddComment = !this.showAddComment
-            }, 
+            },
             addComment() {
                 this.comment.postId = this.activePost._id
                 if (this.user._id) {
@@ -74,6 +80,17 @@
                 this.$store.state.activeComment = comment
                 this.$store.dispatch('getSubComments', comment)
                 this.$router.push('sub-comment')
+            },
+            addUpVote(comment) {
+                comment.userUpVotes.push(this.user._id)
+                this.$store.dispatch('upComment', comment)
+            },
+            voteCheck(comment) {
+                return !(comment.userUpVotes.includes(this.user._id))
+            },
+            addUpVote(comment) {
+                comment.userDownVotes.push(this.user._id)
+                this.$store.dispatch('upComment', comment)
             }
         }
     }
