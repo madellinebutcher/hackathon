@@ -26,8 +26,8 @@
                 <p>{{post.author}}</p>
                 <p>upvotes: {{post.userUpVotes.length}}</p>
                 <p>downvotes: {{post.userDownVotes.length}}</p>
-                <button v-if="voteCheck(post)"@click="addUpVote(post)">up vote</button>
-                <button v-if="voteCheck(post)"@click="addDownVote(post)">down vote</button>
+                <button v-if="voteCheck(post)" @click="addUpVote(post)">up vote</button>
+                <button v-if="voteCheck(post)" @click="addDownVote(post)">down vote</button>
             </div>
         </div>
 
