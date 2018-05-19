@@ -73,7 +73,6 @@
                     this.comment.author = this.user.name
                     this.comment.userId = this.user._id
                 }
-                debugger
                 this.$store.dispatch('addComment', this.comment)
             },
             selectComment(comment) {

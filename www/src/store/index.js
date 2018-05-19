@@ -56,11 +56,10 @@ export default new vuex.Store({
         },
 
         getPosts({ dispatch, commit }, post) {
-            debugger
             auth.get('/posts')
                 .then(res => {
                     var sort = res.data.sort((a, b) => {
-                        b.userUpVotes.length - a.userUpVotes
+                        return b.userUpVotes.length - a.userUpVotes.length
                     })
                     commit('setPost', sort)
                 })
@@ -74,25 +73,30 @@ export default new vuex.Store({
         getComments({ dispatch, commit }, post) {
             auth.get('/comments?postId=' + post._id)
                 .then(res => {
+                    var sort = res.data.sort((a, b) => {
+                        return b.userUpVotes.length - a.userUpVotes.length
+                    })
                     console.log(res)
                     commit('setComments', res.data)
                 })
         },
-        addComment({ dispatch, commit }, comment) {
+        addComment({ dispatch, commit, state }, comment) {
             auth.post('/comments', comment)
                 .then(res => {
-                    dispatch('getComments', this.activePost)
+                    dispatch('getComments', state.activePost)
                 })
         },
         getSubComments({ dispatch, commit }, comment) {
             auth.get('/sub-comments?commentId=' + comment._id)
                 .then(res => {
+                    var sort = res.data.sort((a, b) => {
+                        b.userUpVotes.length - a.userUpVotes.length
+                    })
                     console.log(res)
                     commit('setSubComments', res.data)
                 })
         },
         addSubComment({ dispatch, commit, state }, subComment) {
-            debugger
             auth.post('/sub-comments', subComment)
                 .then(res => {
                     dispatch('getSubComments', state.activeComment)
@@ -101,19 +105,19 @@ export default new vuex.Store({
         upPost({ dispatch, commit }, post) {
             auth.put('posts/' + post._id, post)
                 .then(res => {
-                    commit('setPost')
+                    dispatch('getPosts')
                 })
         },
         upComment({ dispatch, commit}, comment) {
             auth.put('comments/' + comment._id, comment)
                 .then(res => {
-                    commit('setComments')
+                    dispatch('getComments')
                 })
         },
         upSubComment({ dispatch, commit}, subComment) {
             auth.put('sub-comments/' + subComment._id, subComment)
                 .then(res => {
-                    commit('setSubComments')
+                    dispatch('getSubComments')
                 })
         }
     }
