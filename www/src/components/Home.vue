@@ -18,7 +18,7 @@
 
         <div>
             <div class="post" v-for="post in posts">
-                    <div class="card container-fluid">
+                    <div class="card container-fluid center">
                             <div class="card-body">
                 <a @click="selectPost(post)"><h4>{{post.title}}</h4></a>
                 <a @click="selectPost(post)">
@@ -109,10 +109,10 @@
 
 .card{
 background-image: url('../../D20.png');
-    width: 50%;
 margin-bottom: 1rem;
 margin-top: 1rem;
-width: 30rem
+width: 30rem;
+font-weight: 4rem
 }
 .butt{
     background: rgb(78, 78, 78);
@@ -125,5 +125,10 @@ width: 30rem
   border-radius: 1rem;
   margin-left:1rem
 }
-
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
 </style>
