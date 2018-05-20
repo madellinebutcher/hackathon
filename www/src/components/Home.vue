@@ -4,7 +4,7 @@
         <div class="user" v-if="user._id">
             <h3>user: {{user.name}}</h3>
         </div>
-        <button class="butt" @click="toggle">Add post</button>
+        <button class="butt" @click="toggle" v-if="user._id">Add post</button>
         <div v-if="showAddPost">
             <form v-on:submit.prevent="addPost">
                 <div class="form-group">
@@ -20,17 +20,17 @@
             <div class="post" v-for="post in posts">
                     <div class="card container-fluid center">
                             <div class="card-body">
-                <a @click="selectPost(post)"><h4>{{post.title}}</h4></a>
                 <a @click="selectPost(post)">
                     <h4>{{post.title}}</h4>
                 </a>
                 <img :src="post.img" alt="">
                 <p>{{post.body}}</p>
-                <p>{{post.author}}</p>
+                <p>Author: {{post.author}}</p>
                 <p>upvotes: {{post.userUpVotes.length}}</p>
                 <p>downvotes: {{post.userDownVotes.length}}</p>
-                <button v-if="voteCheck(post)" @click="addUpVote(post)">up vote</button>
-                <button v-if="voteCheck(post)" @click="addDownVote(post)">down vote</button>
+                <button :disabled="voteCheck(post)" @click="addUpVote(post)">up vote</button>
+                <button :disabled="voteCheck(post)" @click="addDownVote(post)">down vote</button>
+                <button v-if="post.userId == user._id" @click="deletePost(post)">Delete</button>
             </div>
             </div>
             </div>
@@ -57,7 +57,7 @@
                     userUpVotes: [],
                     userDownVotes: [],
                     author: '',
-                    userId: '',//may be incorect
+                    userId: '',
                 },
                 showAddPost: false,
             }
@@ -93,11 +93,14 @@
                 this.$store.dispatch('upPost', post)
             },
             voteCheck(post) {
-                return !(post.userUpVotes.includes(this.user._id))
+                return (post.userUpVotes.includes(this.user._id))
             },
             addDownVote(post) {
                 post.userDownVotes.push(this.user._id)
                 this.$store.dispatch('upPost', post)
+            },
+            deletePost(post) {
+                this.$store.dispatch('deletePost', post)
             }
         }
     }

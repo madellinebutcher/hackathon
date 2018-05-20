@@ -5,7 +5,7 @@ var schemaName = 'User'
 
 
 var schema = new Schema({
-    name: {type: String, required: true, unique: true},//required
+    name: {type: String, required: true, unique: true, minlength: 3, maxlength: 10},//required
     img: {type: String, required: false},//required
     userClass: {type: String, required: false},//required
     userRace: {type: String, required: false},//required,

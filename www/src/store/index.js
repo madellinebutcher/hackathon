@@ -37,22 +37,28 @@ export default new vuex.Store({
 
     actions: {
         getUsers({ dispatch, commit }, user) {
-            auth.post('/login', user)
-                .then(res => {
-                    commit('setUser', res.data)
-                })
-                .catch(err => {
-                    console.error(err)
-                })
+            if (user.name.length >= 3 && user.name.length <= 10) {
+                auth.post('/login', user)
+                    .then(res => {
+                        commit('setUser', res.data)
+                        router.push('home')
+                    })
+                    .catch(err => {
+                        console.error(err)
+                    })
+            }
         },
 
         addUsers({ dispatch, commit }, user) {
-            auth.post('/create', user).then(res => {
-                commit('setUser', res.data)
-            })
-                .catch(err => {
-                    console.error(err)
+            if (user.name.length >= 3 && user.name.length <= 10) {
+                auth.post('/create', user).then(res => {
+                    commit('setUser', res.data)
+                    router.push('home')
                 })
+                    .catch(err => {
+                        console.error(err)
+                    })
+            }
         },
 
         getPosts({ dispatch, commit }, post) {
@@ -108,15 +114,33 @@ export default new vuex.Store({
                     dispatch('getPosts')
                 })
         },
-        upComment({ dispatch, commit}, comment) {
+        upComment({ dispatch, commit }, comment) {
             auth.put('comments/' + comment._id, comment)
                 .then(res => {
                     dispatch('getComments')
                 })
         },
-        upSubComment({ dispatch, commit}, subComment) {
+        upSubComment({ dispatch, commit }, subComment) {
             auth.put('sub-comments/' + subComment._id, subComment)
                 .then(res => {
+                    dispatch('getSubComments')
+                })
+        },
+        deletePost({ dispatch, commit }, post) {
+            auth.delete('/posts/' + post._id)
+                .then(() => {
+                    dispatch('getPosts')
+                })
+        },
+        deleteComment({ dispatch, commit }, comment) {
+            auth.delete('/comments/' + comment._id)
+                .then(() => {
+                    dispatch('getComments')
+                })
+        },
+        deleteSubComments({ dispatch, commit }, subComment) {
+            auth.delete('/sub-comments/' + subComment._id)
+                .then(() => {
                     dispatch('getSubComments')
                 })
         }

@@ -5,7 +5,7 @@
             <h3>Body: {{activeComment.body}} </h3>
             <img :src="activeComment.img" alt="" srcset="">
         </div>
-        <button @click="toggle">Add sub-comment</button>
+        <button @click="toggle" v-if="user._id">Add sub-comment</button>
         <div v-if="showAddSubComment">
             <form v-on:submit.prevent="addSubComment">
                 <div class="form-group">
@@ -23,8 +23,9 @@
             <p>{{subComment.body}}</p>
             <p>upvotes: {{subComment.userUpVotes.length}}</p>
             <p>downvotes: {{subComment.userDownVotes.length}}</p>
-            <button v-if="voteCheck(subComment)" @click="addUpVote(subComment)">up vote</button>
-            <button v-if="voteCheck(subComment)" @click="addDownVote(subComment)">down vote</button>
+            <button :disabled="voteCheck(subComment)" @click="addUpVote(subComment)">up vote</button>
+            <button :disabled="voteCheck(subComment)" @click="addDownVote(subComment)">down vote</button>
+            <button v-if="subComment.userId == user._id" @click="deleteSubComment(subComment)">Delete</button>
         </div>
 
 
@@ -90,7 +91,10 @@
                 this.$store.dispatch('upSubComment', subComment)
             }, 
             voteCheck(subComment) {
-                return !(subComment.userUpVotes.includes(this.user._id))
+                return (subComment.userUpVotes.includes(this.user._id))
+            },
+            deleteSubComment(subComment) {
+                this.$store.dispatch('deleteSubComment', subComment)
             }
         }
     }

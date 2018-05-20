@@ -44,14 +44,11 @@
       },
       register() {
         this.$store.dispatch('addUsers', this.user)
-        this.$router.push('home')
       },
       login() {
         this.$store.dispatch('getUsers', this.user)
-        this.$router.push('home')
       }
-    },
-    components: {}
+    }
   }
 </script>
 <style scoped>
