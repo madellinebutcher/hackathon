@@ -25,8 +25,8 @@
             <p>{{comment.body}}</p>
             <p>upvotes: {{comment.userUpVotes.length}}</p>
             <p>downvotes: {{comment.userDownVotes.length}}</p>
-            <button :disabled="voteCheck(comment)" @click="addUpVote(comment)">up vote</button>
-            <button :disabled="voteCheck(comment)" @click="addDownVote(comment)">down vote</button>
+            <button :disabled="voteCheck(comment)" v-if="user._id" @click="addUpVote(comment)">up vote</button>
+            <button :disabled="voteCheck(comment)" v-if="user._id" @click="addDownVote(comment)">down vote</button>
             <button v-if="comment.userId == user._id" @click="deleteComment(comment)">Delete</button>
         </div>
 

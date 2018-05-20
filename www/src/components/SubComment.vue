@@ -23,8 +23,8 @@
             <p>{{subComment.body}}</p>
             <p>upvotes: {{subComment.userUpVotes.length}}</p>
             <p>downvotes: {{subComment.userDownVotes.length}}</p>
-            <button :disabled="voteCheck(subComment)" @click="addUpVote(subComment)">up vote</button>
-            <button :disabled="voteCheck(subComment)" @click="addDownVote(subComment)">down vote</button>
+            <button :disabled="voteCheck(subComment)" v-if="user._id" @click="addUpVote(subComment)">up vote</button>
+            <button :disabled="voteCheck(subComment)" v-if="user._id" @click="addDownVote(subComment)">down vote</button>
             <button v-if="subComment.userId == user._id" @click="deleteSubComment(subComment)">Delete</button>
         </div>
 

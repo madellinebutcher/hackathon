@@ -41,7 +41,7 @@ export default new vuex.Store({
                 auth.post('/login', user)
                     .then(res => {
                         commit('setUser', res.data)
-                        router.push('home')
+                        router.push('/')
                     })
                     .catch(err => {
                         console.error(err)
@@ -53,7 +53,7 @@ export default new vuex.Store({
             if (user.name.length >= 3 && user.name.length <= 10) {
                 auth.post('/create', user).then(res => {
                     commit('setUser', res.data)
-                    router.push('home')
+                    router.push('/')
                 })
                     .catch(err => {
                         console.error(err)
@@ -143,6 +143,10 @@ export default new vuex.Store({
                 .then(() => {
                     dispatch('getSubComments')
                 })
+        },
+        signOut({dispatch, commit, state}) {
+            var signedOut = {}
+            commit('setUser', signedOut)
         }
     }
 })

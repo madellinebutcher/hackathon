@@ -28,8 +28,8 @@
                 <p>Author: {{post.author}}</p>
                 <p>upvotes: {{post.userUpVotes.length}}</p>
                 <p>downvotes: {{post.userDownVotes.length}}</p>
-                <button :disabled="voteCheck(post)" @click="addUpVote(post)">up vote</button>
-                <button :disabled="voteCheck(post)" @click="addDownVote(post)">down vote</button>
+                <button :disabled="voteCheck(post)" v-if="user._id" @click="addUpVote(post)">up vote</button>
+                <button :disabled="voteCheck(post)" v-if="user._id" @click="addDownVote(post)">down vote</button>
                 <button v-if="post.userId == user._id" @click="deletePost(post)">Delete</button>
             </div>
             </div>
@@ -62,7 +62,6 @@
                 showAddPost: false,
             }
         },
-
         computed: {
             posts() {
                 return this.$store.state.posts
