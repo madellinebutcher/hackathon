@@ -11,6 +11,16 @@ router.get('/api/posts', (req, res, next) => {
     })
 })
 
+router.get('/api/posts/:id', (req, res, next) => {
+  Posts.findById(req.params.id)
+    .then(posts => {
+      res.status(200).send(posts)
+    })
+    .catch(err => {
+      res.status(400).send(err)
+    })
+})
+
 router.put('/api/posts/:id', (req, res, next) => {
   Posts.findByIdAndUpdate(req.params.id, req.body, {
       new: true

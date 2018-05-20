@@ -24,7 +24,20 @@ router.post('/api/create', (req, res, next) => {
     })
 })
 
-router.put('/api/')
+router.put('/api/users/:id', (req, res, next) => {
+ Users.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
+    .then(user => {
+      res.status(200).send({
+        message: "Successfully Updated",
+        user
+      })
+    })
+    .catch(err => {
+      res.status(400).send(err)
+    })
+})
 
 
 module.exports = {

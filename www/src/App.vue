@@ -1,9 +1,15 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-light top-header">
-      <a class="navbar-brand" @click="getPosts">Home</a>
+      <div>
+          <a class="navbar-brand" @click="getPosts">Home</a>
+          <a class="navbar-brand" v-if="user._id" @click="getFavs">Favorites</a>
+      </div>
       <a class="navbar-brand" @click="login" v-if="!(user._id)">Sign up/Login</a>
-      <a class="navbar-brand" @click="signOut" v-if="user._id">Sign out</a>
+      <div v-if="user._id" class="d-flex flex-column">
+        <a class="navbar-brand">User: {{user.name}}</a>
+        <a class="navbar-brand" @click="signOut">Sign out</a>
+      </div>
     </nav>
     <router-view/>
   </div>
@@ -27,6 +33,9 @@
       },
       signOut() {
         this.$store.dispatch('signOut')
+      },
+      getFavs() {
+        this.$router.push('favs')
       }
     }
   }

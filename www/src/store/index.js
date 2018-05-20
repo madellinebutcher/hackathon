@@ -61,7 +61,7 @@ export default new vuex.Store({
             }
         },
 
-        getPosts({ dispatch, commit }, post) {
+        getPosts({ dispatch, commit }) {
             auth.get('/posts')
                 .then(res => {
                     var sort = res.data.sort((a, b) => {
@@ -70,10 +70,18 @@ export default new vuex.Store({
                     commit('setPost', sort)
                 })
         },
+        getPostById({ dispatch, commit }, postId) {
+            auth.get('/posts/' +postId)
+                .then(res => {
+                    debugger
+                    commit('setPost', res.data)
+                })
+        },
         addPost({ dispatch, commit }, post) {
             auth.post('/posts', post)
                 .then(res => {
-                    commit('setPost', post)
+                    debugger
+                    dispatch('getPosts')
                 })
         },
         getComments({ dispatch, commit }, post) {
@@ -147,6 +155,21 @@ export default new vuex.Store({
         signOut({dispatch, commit, state}) {
             var signedOut = {}
             commit('setUser', signedOut)
+        },
+        favPost({dispatch, commit, state}, post) {
+            state.user.favorites.push(post._id)
+            auth.put('users/' + state.user._id, state.user)
+                .then(res => {
+                    commit('setUser', res.data.user)
+                })
+        },
+        unFavPost({dispatch, commit, state}, post) {
+            var index = state.user.favorites.indexOf(post._id)
+            state.user.favorites.splice(index, 1)
+            auth.put('users/' + state.user._id, state.user)
+                .then(res => {
+                    commit('setUser', res.data.user)
+                })
         }
     }
 })
