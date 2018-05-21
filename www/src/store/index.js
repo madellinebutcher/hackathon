@@ -73,14 +73,12 @@ export default new vuex.Store({
         getPostById({ dispatch, commit }, postId) {
             auth.get('/posts/' +postId)
                 .then(res => {
-                    debugger
                     commit('setPost', res.data)
                 })
         },
         addPost({ dispatch, commit }, post) {
             auth.post('/posts', post)
                 .then(res => {
-                    debugger
                     dispatch('getPosts')
                 })
         },

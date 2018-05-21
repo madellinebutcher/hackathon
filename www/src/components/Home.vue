@@ -2,7 +2,7 @@
     <div class="Home">
         <button class="butt" @click="toggle" v-if="user._id">Add post</button>
         <div v-if="showAddPost">
-            <form v-on:submit.prevent="addPost">
+            <form v-on:submit.prevent="addPost" id='post'>
                 <div class="form-group">
                     <input class="register" type="text" name="title" placeholder=" Title" v-model="post.title">
                     <input class="register" type="text" name="body" placeholder=" Your post here...." v-model="post.body">
@@ -25,7 +25,7 @@
                 <p>upvotes: {{post.userUpVotes.length}}</p>
                 <p>downvotes: {{post.userDownVotes.length}}</p>
                 <button :disabled="voteCheck(post)" v-if="user._id" @click="addUpVote(post)">up vote</button>
-                <button :disabled="voteCheck(post)" v-if="user._id" @click="addDownVote(post)">down vote</button>
+                <button :disabled="downCheck(post)" v-if="user._id" @click="addDownVote(post)">down vote</button>
                 <button v-if="post.userId == user._id" @click="deletePost(post)">Delete</button>
                 <div v-if="user._id">
                         <button @click="favPost(post)" v-if="!(user.favorites.includes(post._id))"><i class="far fa-star"></i></button>
@@ -78,6 +78,15 @@
                     this.post.userId = this.user._id
                 }
                 this.$store.dispatch('addPost', this.post)
+                this.post = {
+                    title: '',
+                    body: '',
+                    img: '',
+                    userUpVotes: [],
+                    userDownVotes: [],
+                    author: '',
+                    userId: '',
+                }
             },
             toggle() {
                 this.showAddPost = !this.showAddPost
@@ -93,6 +102,9 @@
             },
             voteCheck(post) {
                 return (post.userUpVotes.includes(this.user._id))
+            },
+            downCheck(post) {
+                return (post.userDownVotes.includes(this.user._id))
             },
             addDownVote(post) {
                 post.userDownVotes.push(this.user._id)

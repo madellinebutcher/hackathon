@@ -81,6 +81,17 @@
                     this.subComment.userId = this.user._id
                 }
                 this.$store.dispatch('addSubComment', this.subComment)
+                this.subComment = {
+                    title: '',
+                    body: '',
+                    img: '',
+                    userUpVotes: [],
+                    userDownVotes: [],
+                    author: '',
+                    userId: '',//may be incorect
+                    postId: '',
+                    commentId: ''
+                }
             },
             addUpVote(subComment) {
                 subComment.userUpVotes.push(this.user._id)

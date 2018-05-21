@@ -75,6 +75,16 @@
                     this.comment.userId = this.user._id
                 }
                 this.$store.dispatch('addComment', this.comment)
+                this.comment = {
+                    title: '',
+                    body: '',
+                    img: '',
+                    userUpVotes: [],
+                    userDownVotes: [],
+                    author: '',
+                    userId: '',//may be incorect
+                    postId: ''
+                }
             },
             selectComment(comment) {
                 this.$store.state.activeComment = comment
