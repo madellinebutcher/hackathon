@@ -36,6 +36,7 @@
       },
       getFavs() {
         this.$router.push('favs')
+        this.$store.dispatch('getFavs')
       }
     }
   }

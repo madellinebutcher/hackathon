@@ -34,13 +34,6 @@
 <script>
     export default {
         name: 'Favs',
-        mounted() {
-          var favs = this.$store.state.user.favorites
-          for (let i = 0; i < favs.length; i++) {
-            const post = favs[i];
-            this.$store.dispatch('getPostById', post)
-          }
-        },
         data() {
             return {
                 post: {

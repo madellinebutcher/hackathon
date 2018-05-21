@@ -17,10 +17,10 @@
             </form>
         </div>
         <div class="comments" v-for="comment in comments">
+            <h3>User: {{comment.author}}</h3>
             <a @click="selectComment(comment)">
-                <h3>User: {{comment.author}}</h3>
+                <h4>title: {{comment.title}}</h4>
             </a>
-            <h4>title: {{comment.title}}</h4>
             <img :src="comment.img" alt="">
             <p>{{comment.body}}</p>
             <p>upvotes: {{comment.userUpVotes.length}}</p>
